@@ -1,0 +1,12 @@
+[submodule "rocq-crane-sdl2"]
+	path = rocq-crane-sdl2
+	url = https://github.com/joom/rocq-crane-sdl2
+	branch = main
+[submodule "game-trees"]
+	path = game-trees
+	url = https://github.com/bloomberg/game-trees
+	branch = pruning
+[submodule "crane"]
+	path = crane
+	url = https://github.com/bloomberg/crane
+	branch = main
