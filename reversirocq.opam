@@ -1,0 +1,37 @@
+opam-version: "2.0"
+synopsis: "Verified Reversi in Rocq extracted to C++ with Crane"
+description: "Reversirocq is a Reversi implementation written in Rocq, with pure game logic and SDL rendering, using Crane for extraction to C++ and the game-trees alpha-beta Reversi formalization for rules and AI."
+maintainer: ["Joomy Korkut"]
+authors: ["Joomy Korkut"]
+license: "MIT"
+homepage: "https://github.com/joom/reversirocq"
+bug-reports: "https://github.com/joom/reversirocq/issues"
+depends: [
+  "ocaml"
+  "dune" {>= "3.18"}
+  "coq" {>= "9.0.0"}
+  "coq-itree"
+  "coq-ext-lib"
+  "coq-paco"
+  "coq-simple-io"
+  "rocq-runtime"
+  "rocq-crane" {= "dev"}
+  "rocq-crane-sdl2" {= "dev"}
+]
+build: [
+  "dune" "build"
+]
+install: [
+  "dune" "install"
+]
+flags: light-uninstall
+remove: [
+  ["dune" "uninstall"]
+]
+tags: [
+  "keyword:game"
+  "keyword:reversi"
+  "keyword:othello"
+  "keyword:extraction"
+  "keyword:C++"
+]

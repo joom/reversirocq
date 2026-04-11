@@ -1,7 +1,7 @@
 _build/
 generated/
 src/generated/
-rocqsweeper
+reversirocq
 *.vo
 *.vok
 *.vos
