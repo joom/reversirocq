@@ -108,10 +108,39 @@ Definition flips_in_direction (b : board) (p : player)
 Definition all_flips (b : board) (p : player) (row col : nat) : list nat :=
   List.concat (map (flips_in_direction b p row col) all_directions).
 
+Fixpoint has_flips_in_direction (b : board) (p : player)
+    (row col : Z) (dr dc : Z) (seen_opponent : bool) (fuel : nat) : bool :=
+  match fuel with
+  | O => false
+  | S fuel' =>
+    let r := (row + dr)%Z in
+    let c := (col + dc)%Z in
+    if ((0 <=? r) && (r <? 8) && (0 <=? c) && (c <? 8))%Z then
+      let pos := Z.to_nat (r * 8 + c)%Z in
+      match get_cell b pos with
+      | Filled q =>
+        if player_eqb q p
+        then seen_opponent
+        else has_flips_in_direction b p r c dr dc true fuel'
+      | Empty => false
+      end
+    else false
+  end.
+
+Fixpoint any_direction_flips (b : board) (p : player)
+    (row col : nat) (dirs : list direction) : bool :=
+  match dirs with
+  | [] => false
+  | (dr, dc) :: rest =>
+    if has_flips_in_direction b p (Z.of_nat row) (Z.of_nat col) dr dc false 7
+    then true
+    else any_direction_flips b p row col rest
+  end.
+
 Definition is_valid_move (b : board) (p : player) (row col : nat) : bool :=
   in_bounds row col &&
   match get_cell b (pos_of row col) with
-  | Empty => negb (Nat.eqb (List.length (all_flips b p row col)) 0)
+  | Empty => any_direction_flips b p row col all_directions
   | Filled _ => false
   end.
 
@@ -218,8 +247,9 @@ Definition game_children (g : game) : list game :=
   map (apply_move g) (moves g).
 
 Definition unfold_game_tree (g : game) : cotree :=
+  let children := game_children g in
   conode g (fun idx =>
-    match nth_error (game_children g) idx with
+    match nth_error children idx with
     | Some g' => Some g'
     | None => None
     end).
