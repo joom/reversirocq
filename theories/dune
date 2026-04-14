@@ -2,5 +2,5 @@
  (name ReversirocqGame)
  (package reversirocq)
  (synopsis "Reversirocq in Rocq, extracted to C++ via Crane")
- (theories Stdlib Crane ITree ExtLib Paco CraneSDL2)
+ (theories Stdlib Crane ITree ExtLib Paco CraneSDL2 GameTrees)
  (flags (:standard -output-directory %{project_root})))
