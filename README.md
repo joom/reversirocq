@@ -128,6 +128,41 @@ Run the Dune package check:
 make check
 ```
 
+## WebAssembly Build
+
+The generated C++ can also be compiled with Emscripten:
+
+```bash
+make web
+```
+
+This builds:
+
+```text
+docs/index.html
+docs/index.js
+docs/index.wasm
+docs/index.data
+```
+
+The web target uses Emscripten's SDL2 ports and preloads `assets/`, so the tap
+sound remains available through the virtual filesystem. It also uses a small
+browser-specific entry point in [`src/web_main.cpp`](./src/web_main.cpp) so the
+game advances one frame at a time through `emscripten_set_main_loop_arg` instead
+of running the native recursive `main` loop.
+
+Serve the generated files from a local HTTP server:
+
+```bash
+python3 -m http.server 8000 -d docs
+```
+
+Then open:
+
+```text
+http://localhost:8000/
+```
+
 ## Running
 
 Run the game:

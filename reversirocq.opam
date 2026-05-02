@@ -17,6 +17,7 @@ depends: [
   "rocq-runtime"
   "rocq-crane" {= "dev"}
   "rocq-crane-sdl2" {= "dev"}
+  "rocq-game-trees" {= "dev"}
 ]
 build: [
   "dune" "build"
